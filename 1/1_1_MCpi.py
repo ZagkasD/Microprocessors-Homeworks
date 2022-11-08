@@ -30,6 +30,7 @@ def main():
     counter = check_point_position(sample_size, points_matrix) 
     print('Points inside the circle = '+str(counter))
     points_ratio = counter/(sample_size) # Points inside the circle / all points
+    # points_ratio approximates circle area / square area. From theory, not proven!
     pi_approx = points_ratio * 4
     print('Π = '+str(pi_approx))
    
