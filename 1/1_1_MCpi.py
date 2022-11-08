@@ -1,6 +1,6 @@
 # Monte Carlo algorithm for calculating pi
-
-# May the gods forgive me for the code I'm about to write
+#
+# Gods forgive me for the code I'm about to write
 
 from math import sqrt
 import random
