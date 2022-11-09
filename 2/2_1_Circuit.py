@@ -43,10 +43,12 @@ def main():
     # 1 0 1|0|0:0
     # 1 1 0|1|1:1
     # 1 1 1|1|0:0
+
     a=1
     b=1
     c=1
     print('a = ',a,'\nb = ',b,'\nc = ',c)
+    # Simulation of the circuit with gates
     circuit = sp2AND(sp2AND(a,b),NOT(c))
     print('Circuit output: ',circuit)
 
