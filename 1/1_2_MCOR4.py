@@ -1,7 +1,6 @@
 # Monte Carlo algorithm for calculating Esw (switching activity) of a 4 input OR gate
 #
 # Gods forgive me for the code I'm about to write
-
 import random
 
 # Add extra columns in the workload
