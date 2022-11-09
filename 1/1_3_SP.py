@@ -110,7 +110,7 @@ def sp2NOR(input1sp, input2sp):
 # 1 1 0:0
 # 1 1 1:1
 def sp3AND(input1sp, input2sp, input3sp):
-    print("AND Gate for input probabilities:",input1sp,input2sp,input3sp)
+    print("3 AND Gate for input probabilities:",input1sp,input2sp,input3sp)
     s = input1sp*input2sp*input3sp
     print("Signal Probability =",s)
     Esw = 2*s*(1-s)
@@ -127,7 +127,7 @@ def sp3AND(input1sp, input2sp, input3sp):
 # 1 1 0:1
 # 1 1 1:1
 def sp3OR(input1sp, input2sp,input3sp):
-    print("OR Gate for input probabilities:",input1sp,input2sp,input3sp)
+    print("3 OR Gate for input probabilities:",input1sp,input2sp,input3sp)
     s = check=7/8
     print("Signal Probability =",s)
     Esw = 2*s*(1-s)
@@ -144,7 +144,7 @@ def sp3OR(input1sp, input2sp,input3sp):
 # 1 1 0:1
 # 1 1 1:0
 def sp3XOR(input1sp, input2sp,input3sp):
-    print("XOR Gate for input probabilities:",input1sp,input2sp,input3sp)
+    print("3 XOR Gate for input probabilities:",input1sp,input2sp,input3sp)
     s = check=6/8
     print("Signal Probability =",s)
     Esw = 2*s*(1-s)
@@ -161,7 +161,7 @@ def sp3XOR(input1sp, input2sp,input3sp):
 # 1 1 0:1
 # 1 1 1:0
 def sp3NAND(input1sp, input2sp, input3sp):
-    print("AND Gate for input probabilities:",input1sp,input2sp,input3sp)
+    print("3 NAND Gate for input probabilities:",input1sp,input2sp,input3sp)
     s = 1-(input1sp*input2sp*input3sp)
     print("Signal Probability =",s)
     Esw = 2*s*(1-s)
@@ -178,7 +178,7 @@ def sp3NAND(input1sp, input2sp, input3sp):
 # 1 1 0:0
 # 1 1 1:0
 def sp3NOR(input1sp, input2sp,input3sp):
-    print("OR Gate for input probabilities:",input1sp,input2sp,input3sp)
+    print("3 NOR Gate for input probabilities:",input1sp,input2sp,input3sp)
     s = 1-(7/8)
     print("Signal Probability =",s)
     Esw = 2*s*(1-s)
