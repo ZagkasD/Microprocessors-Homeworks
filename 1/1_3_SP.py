@@ -192,6 +192,10 @@ def sp3NOR(input1sp, input2sp,input3sp):
 
 
 # TODO gates with N inputs
+# ex. the AND gate has output 1 only in 1 out of N cases. So the Pout = P1*P2*...*PN
+#     the OR gate has output 1 in all but 1 of N cases. Calculate the Pout for 0 and invert it.
+#     Pout = 1-[(1-P1)*(1-P2)*...*(1-PN) so the ]
+#     the XOR is the hardest one 
 
 
 def main():

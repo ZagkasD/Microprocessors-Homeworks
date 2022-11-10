@@ -65,6 +65,8 @@ def main():
     print('vectorsNumber =',vectorsNumber)
     print('switchingActivity = ',switchingActivity)
 
+    # Mistake! The switching activity of the last and gate is using as inputs the Esw of the previous two.
+    # You want as inputs the signal probability functions
     # Switching activity approximation = 0.22 with MC
     # 0.30 with SP
 
