@@ -38,29 +38,77 @@ def process(Element, signalsTable):
 # 1 1 1 | 1 0 | 0
 
 # Apply truth table and check for mistakes
-def testbench(elementsTable, signalsTable, truth_table, top_inputs):
-    print("Signals")
-    # Apply inputs from the truth table
-    for row in range(len(truth_table)):
-        column = 0
-        for k in top_inputs:
-            signalsTable[k] = truth_table[row][column]
-            column += 1
-        # Simulate each element/gate
-        for k in range(len(elementsTable)):
-            process(elementsTable[k], signalsTable)
-        
-        print(signalsTable)
+def testbench(elementsTable, signalsTable, truth_table, top_inputs, inputs_flag):
+    print("\n==================Testing=======================\n")
 
-        # Check if the simulation was correct
-        for p in range(len(top_inputs),len(signalsTable)):
-            #if signalsTable[3] == truth_table[row][3] and signalsTable[4] == truth_table[row][4] and signalsTable[5] == truth_table[row][5]:
-            if list(signalsTable.values())[p] == truth_table[row][p]:
-                continue
-            else:
-                print("Testbench failed.") 
-                exit()
-    print("\nTestbench successful")
+    if inputs_flag == "N":
+        print('\nUsing truth table for inputs.\n')
+        # Apply inputs from the truth table
+        for row in range(len(truth_table)):
+            column = 0
+            # Give inputs from truth table
+            for k in top_inputs:
+                signalsTable[k] = truth_table[row][column]
+                column += 1
+            # Simulate each element/gate
+            for k in range(len(elementsTable)):
+                process(elementsTable[k], signalsTable)
+            
+            print(signalsTable)
+
+            # Check if the simulation was correct
+            for p in range(len(top_inputs),len(signalsTable)):
+                #if signalsTable[3] == truth_table[row][3] and signalsTable[4] == truth_table[row][4] and signalsTable[5] == truth_table[row][5]:
+                if list(signalsTable.values())[p] == truth_table[row][p]:
+                    continue
+                else:
+                    print("Testbench failed.") 
+                    exit()
+    else:
+        # Important!
+        # If the inputs are not in the truth table
+        # The simulation will automatically result is success
+        # Simulate each element/gate
+            for k in range(len(elementsTable)):
+                process(elementsTable[k], signalsTable)
+            
+            print(signalsTable)
+
+            # Check which input was given from the truth table
+            for row in range(len(truth_table)):
+                # This is every column in truth table from the top inputs
+                for p in range(len(top_inputs)):
+                    if list(signalsTable.values())[p] != truth_table[row][p]:
+                        # Break to the new line of truth table
+                        break
+                    elif p == len(top_inputs): 
+                        # We found the input from the truth table
+                        for o in range(len(top_inputs),len(signalsTable)):
+                            if list(signalsTable.values())[o] != truth_table[row][o]:
+                                print("\nTestbench failed.\n")
+                                exit()            
+                    else:
+                        print("\nTestbench successful.\n")
+                        exit()
+            # for p in range(len(top_inputs),len(signalsTable)):
+            #     #if signalsTable[3] == truth_table[row][3] and signalsTable[4] == truth_table[row][4] and signalsTable[5] == truth_table[row][5]:
+            #     if list(signalsTable.values())[p] == truth_table[row][p]:
+            #         continue
+            #     else:
+            #         print("Testbench failed.") 
+            #         exit()
+            # truth table of model
+# a b c | e f | d
+# 0 0 0 | 0 1 | 0
+# 0 0 1 | 0 0 | 0
+# 0 1 0 | 0 1 | 0
+# 0 1 1 | 0 0 | 0
+# 1 0 0 | 0 1 | 0
+# 1 0 1 | 0 0 | 0
+# 1 1 0 | 1 1 | 1
+# 1 1 1 | 1 0 | 0
+    print("\nTestbench successful.\n")
+    exit()
     
     
 def readfile(input_file, elementTypes, elements_table,top_inputs,signals_table):
@@ -114,14 +162,52 @@ def readfile(input_file, elementTypes, elements_table,top_inputs,signals_table):
                         elements_table[line_number-1].inputs.append(word)
                         word_counter += 1
         line_number += 1 
-        print(signals_table)
 
+def insertInputs(signals_table,top_inputs,inputs_flag):
+    
+    while True:
+        try:
+            inputs_flag = str(input("Do you want to manually enter inputs? Y/N: "))
+            if inputs_flag != 'Y' and inputs_flag != 'N':
+                raise ValueError
+            break
+        except ValueError:
+            print("Invalid input.")
+        # inputs_flag = str(input("Do you want to manually enter inputs? Y/N: "))
+        # if inputs_flag == 'Y' or inputs_flag == 'N':
+        #     break
+        # print("Invalid input.")
+
+
+    if inputs_flag == 'Y':
+        # for i in range(len(top_inputs),len(signals_table)):
+        #     x = input("Give input for signal: ")
+        #     #list(signals_table.values())[i] = x
+        #     signals_table.values()[i] = x
+        #     #list(signalsTable.values())[p]
+        # Bad implementation
+        # For runs more times than necessary
+        for key in signals_table:
+            if key in top_inputs:
+                while True:
+                    try:
+                        x = float(input("Input value for signal '"+str(key)+"' in range [0,1]: "))
+                        if x < 0 or x > 1:
+                            raise ValueError
+                        signals_table[key] = x
+                        break
+                    except ValueError:
+                        print("Invalid input.")
+    print('\nSignals:')  
+    print(signals_table)
+    return inputs_flag
 
 def main():
     input_file = open("inputfile.txt","r")
     elementTypes = ['NOT','AND','OR','XOR','NAND','NOR','XNOR']
     elements_table = [] # list of elements
     signals_table = {}
+    inputs_flag = 'N'   # Check for manual input of top inputs
     truth_table =  [[0,0,0,0,1,0],
                     [0,0,1,0,0,0],
                     [0,1,0,0,1,0],
@@ -133,7 +219,9 @@ def main():
     top_inputs = [] # the inputs of the circuit, incase they're declared in the input file
     
     readfile(input_file, elementTypes, elements_table, top_inputs, signals_table)
-    #signalsTable = top_inputs 
-    testbench(elements_table, signals_table, truth_table, top_inputs)
+
+    inputs_flag = insertInputs(signals_table,top_inputs,inputs_flag)
+
+    testbench(elements_table, signals_table, truth_table, top_inputs,inputs_flag)
     
 main()
