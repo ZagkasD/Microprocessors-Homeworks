@@ -1,0 +1,4 @@
+TLPINPUTS a b c
+AND f a b
+NOT e c
+AND d e f
