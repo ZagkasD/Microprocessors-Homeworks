@@ -98,15 +98,7 @@ def testbench(elementsTable, signalsTable, truth_table, top_inputs, inputs_flag)
             #         print("Testbench failed.") 
             #         exit()
             # truth table of model
-# a b c | e f | d
-# 0 0 0 | 0 1 | 0
-# 0 0 1 | 0 0 | 0
-# 0 1 0 | 0 1 | 0
-# 0 1 1 | 0 0 | 0
-# 1 0 0 | 0 1 | 0
-# 1 0 1 | 0 0 | 0
-# 1 1 0 | 1 1 | 1
-# 1 1 1 | 1 0 | 0
+
     print("\nTestbench successful.\n")
     exit()
     
